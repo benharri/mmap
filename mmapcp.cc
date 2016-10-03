@@ -8,14 +8,14 @@
 
 int main (int argc, char *argv[]) {
   struct stat st, s2t;
+
   int s = open(argv[1], O_RDONLY);
   if (s == -1) { perror("open source"); exit(1); }
 
   int s2 = open(argv[2], O_RDONLY);
   if (s2 == -1) { perror("open source2"); exit(1); }
 
-  if (open(argv[3], O_RDONLY) > 0) { perror("destination file exists. abort. open destfile"); exit(1); }
-  int d = open(argv[3], O_RDWR | O_CREAT, 0644);
+  int d = open(argv[3], O_RDWR | O_CREAT | O_EXCL, 0644);
   if (d == -1) { perror("open destination"); exit(1); }
 
   if (fstat(s, &st)) { perror("stat source"); exit(1); }
